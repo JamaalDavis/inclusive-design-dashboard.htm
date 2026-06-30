@@ -1,19 +1,746 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="0; url=./inclusive-design-dashboard.html">
-    <title>Inclusive Design Intelligence Dashboard</title>
-  </head>
-  <body>
-    <p>
-      Opening the
-      <a href="./inclusive-design-dashboard.html">Inclusive Design Intelligence Dashboard</a>.
-    </p>
-    <p>
-      View the
-      <a href="./overview.html">project overview and Figma links</a>.
-    </p>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inclusive Design Intelligence Dashboard</title>
+  <style>
+    :root {
+      --navy: #1b2a4a;
+      --gold: #d4a843;
+      --coral: #c75b3f;
+      --teal: #2a7b6f;
+      --slate: #5b7b8a;
+      --lavender: #7b6b8a;
+      --warm: #faf7f2;
+      --cream: #fff8e7;
+      --ink: #172033;
+      --muted: #667085;
+      --line: rgba(27, 42, 74, 0.14);
+      --shadow: 0 18px 44px rgba(27, 42, 74, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--warm);
+      color: var(--ink);
+      font-family: Inter, "Source Sans Pro", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .top-rule,
+    .bottom-rule {
+      position: fixed;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: var(--gold);
+      z-index: 10;
+    }
+
+    .top-rule {
+      top: 0;
+    }
+
+    .bottom-rule {
+      bottom: 0;
+    }
+
+    main {
+      width: min(1320px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 54px 0 70px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 32px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      max-width: 880px;
+      color: var(--navy);
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.05;
+    }
+
+    .dek {
+      margin: 0;
+      max-width: 780px;
+      color: rgba(27, 42, 74, 0.72);
+      font-size: 1.08rem;
+      line-height: 1.55;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--coral);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .story-card {
+      padding: 20px;
+      border-radius: 8px;
+      background: var(--navy);
+      color: var(--warm);
+      box-shadow: var(--shadow);
+    }
+
+    .story-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+    }
+
+    .story-card p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 28px 0;
+    }
+
+    .filters button {
+      min-height: 40px;
+      padding: 0 18px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--navy);
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .filters button[aria-pressed="true"] {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .kpi,
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: 0 10px 28px rgba(27, 42, 74, 0.06);
+    }
+
+    .kpi {
+      min-height: 132px;
+      padding: 22px;
+    }
+
+    .kpi .value {
+      display: block;
+      color: var(--accent, var(--navy));
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      line-height: 1;
+      font-weight: 850;
+    }
+
+    .kpi .label {
+      display: block;
+      margin-top: 12px;
+      color: rgba(27, 42, 74, 0.66);
+      font-size: 0.9rem;
+      line-height: 1.3;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr);
+      gap: 16px;
+    }
+
+    .operating-layer {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel {
+      padding: 24px;
+    }
+
+    .panel.dark {
+      background: var(--navy);
+      color: var(--warm);
+    }
+
+    h2 {
+      margin: 0 0 22px;
+      color: var(--navy);
+      font-size: 1.25rem;
+    }
+
+    .dark h2 {
+      color: var(--gold);
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .meta-item {
+      min-height: 104px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(250, 247, 242, 0.64);
+    }
+
+    .meta-item strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--slate);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+    }
+
+    .meta-item span {
+      color: var(--navy);
+      font-size: 0.96rem;
+      font-weight: 760;
+      line-height: 1.35;
+    }
+
+    .human-signal {
+      margin: 0;
+      color: rgba(27, 42, 74, 0.76);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .human-signal strong {
+      color: var(--coral);
+    }
+
+    .voice-note {
+      margin: 14px 0 0;
+      color: rgba(27, 42, 74, 0.54);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .moves {
+      display: grid;
+      gap: 12px;
+    }
+
+    .move {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid rgba(250, 247, 242, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 248, 231, 0.06);
+    }
+
+    .move-label {
+      display: inline-grid;
+      min-height: 30px;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--navy);
+      font-size: 0.72rem;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .move-copy {
+      color: rgba(250, 247, 242, 0.8);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 190px 1fr 44px;
+      gap: 14px;
+      align-items: center;
+      margin: 18px 0;
+    }
+
+    .bar-label {
+      color: rgba(27, 42, 74, 0.8);
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .track {
+      height: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(27, 42, 74, 0.11);
+    }
+
+    .bar {
+      display: block;
+      height: 100%;
+      width: calc(var(--score) * 1%);
+      border-radius: inherit;
+      background-color: var(--accent);
+      background-image: var(--pattern);
+      background-blend-mode: multiply;
+      transition: width 180ms ease;
+    }
+
+    .pattern-stripes {
+      --pattern: repeating-linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.82) 0,
+        rgba(255, 255, 255, 0.82) 2px,
+        transparent 2px,
+        transparent 9px
+      );
+    }
+
+    .pattern-dots {
+      --pattern: radial-gradient(circle, rgba(255, 255, 255, 0.86) 2px, transparent 2.2px);
+      background-size: 10px 10px;
+    }
+
+    .pattern-crosshatch {
+      --pattern:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.72) 0,
+          rgba(255, 255, 255, 0.72) 1px,
+          transparent 1px,
+          transparent 9px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.72) 0,
+          rgba(255, 255, 255, 0.72) 1px,
+          transparent 1px,
+          transparent 9px
+        );
+    }
+
+    .pattern-horizontal {
+      --pattern: repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.86) 0,
+        rgba(255, 255, 255, 0.86) 2px,
+        transparent 2px,
+        transparent 6px
+      );
+    }
+
+    .pattern-vertical {
+      --pattern: repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.68) 0,
+        rgba(255, 255, 255, 0.68) 1px,
+        transparent 1px,
+        transparent 7px
+      );
+    }
+
+    .score {
+      color: rgba(27, 42, 74, 0.62);
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .decisions {
+      display: grid;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .decision {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 14px;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      margin-top: 4px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .decision strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .decision span {
+      color: rgba(250, 247, 242, 0.73);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .evidence {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(250, 247, 242, 0.18);
+      color: rgba(250, 247, 242, 0.82);
+      line-height: 1.5;
+    }
+
+    .source-note {
+      margin-top: 22px;
+      color: rgba(27, 42, 74, 0.52);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .operating-layer,
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      main {
+        width: min(100vw - 24px, 1320px);
+        padding-top: 34px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .bar-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .meta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .score {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-rule" aria-hidden="true"></div>
+  <main>
+    <section class="hero" aria-labelledby="title">
+      <div>
+        <span class="eyebrow">Inclusive Design Intelligence Dashboard</span>
+        <h1 id="title">Inclusive design has outgrown inspiration</h1>
+        <p class="dek">A story-led decision view for turning accessibility, AI risk, neuroinclusion and design-system signals into operating moves.</p>
+      </div>
+      <aside class="story-card">
+        <strong>Throughline</strong>
+        <p>Inclusive design has outgrown inspiration. It now needs infrastructure.</p>
+      </aside>
+    </section>
+
+    <nav class="filters" aria-label="Dashboard filters">
+      <button type="button" data-filter="all" aria-pressed="true">All signals</button>
+      <button type="button" data-filter="compliance" aria-pressed="false">Compliance</button>
+      <button type="button" data-filter="ai" aria-pressed="false">AI risk</button>
+      <button type="button" data-filter="systems" aria-pressed="false">Design systems</button>
+      <button type="button" data-filter="neuro" aria-pressed="false">Neuroinclusion</button>
+    </nav>
+
+    <section class="grid" aria-label="Key metrics" id="kpis"></section>
+
+    <section class="operating-layer">
+      <article class="panel" aria-labelledby="ownership-heading">
+        <h2 id="ownership-heading">Ownership and release path</h2>
+        <div class="meta-grid" id="meta"></div>
+      </article>
+
+      <article class="panel" aria-labelledby="human-heading">
+        <h2 id="human-heading">Representative voice</h2>
+        <p class="human-signal" id="human-signal"></p>
+        <p class="voice-note">Representative voice based on synthesized research themes and user personas; not a verbatim interview quote.</p>
+      </article>
+    </section>
+
+    <section class="content">
+      <article class="panel" aria-labelledby="momentum-heading">
+        <h2 id="momentum-heading">Signal momentum by theme</h2>
+        <div id="bars"></div>
+        <p class="source-note" id="source-note"></p>
+      </article>
+
+      <article class="panel dark" aria-labelledby="decision-heading">
+        <h2 id="decision-heading">Decision queue</h2>
+        <ul class="decisions" id="decisions"></ul>
+        <div class="evidence">
+          <div class="moves" id="moves"></div>
+        </div>
+        <p class="evidence" id="evidence"></p>
+      </article>
+    </section>
+  </main>
+  <div class="bottom-rule" aria-hidden="true"></div>
+
+  <script>
+    const palette = {
+      gold: '#d4a843',
+      coral: '#c75b3f',
+      teal: '#2a7b6f',
+      slate: '#5b7b8a',
+      lavender: '#7b6b8a'
+    };
+
+    const data = {
+      all: {
+        kpis: [
+          ['95.9%', 'home pages with WCAG failures', palette.coral],
+          ['5', 'pressure vectors converging', palette.teal],
+          ['4', 'audience voices aligned on ownership', palette.gold],
+          ['2027', 'US public-sector deadline pressure', palette.lavender]
+        ],
+        bars: [
+          ['Compliance', 86, palette.gold, 'stripes'],
+          ['AI accessibility', 74, palette.coral, 'dots'],
+          ['Neuroinclusive UX', 61, palette.teal, 'horizontal'],
+          ['Design-system governance', 82, palette.lavender, 'vertical']
+        ],
+        decisions: [
+          ['Own it earlier', 'Assign inclusion owners at discovery, design and release.', palette.gold],
+          ['Check AI recovery', 'Audit generated states, escalation, language and failure loops.', palette.teal],
+          ['Bake in defaults', 'Move contrast, labels, focus and motion rules into components.', palette.coral]
+        ],
+        meta: ['Product + Design Systems + Accessibility', 'Discovery through release', 'Evidence of inclusive defaults before launch'],
+        human: ['Maya', 'I am tired of being brought in after the thing is basically built.'],
+        moves: [
+          ['Now', 'Name the owner for each pressure vector before the next roadmap review.', palette.gold],
+          ['Next', 'Convert repeated failures into component rules and release criteria.', palette.teal],
+          ['Watch', 'Validate which AI and neuroinclusion risks are showing up in live support data.', palette.coral]
+        ],
+        evidence: 'Dashboard action: filter by pressure vector, compare signal strength, then turn patterns into product-system decisions.',
+        note: 'Synthesized from the BPFG YouTube, Search, LinkedIn, Segment Channeler, and Insights Storytelling passes.'
+      },
+      compliance: {
+        kpis: [
+          ['95.9%', 'detectable WCAG failure rate', palette.coral],
+          ['WCAG 2.2', 'current W3C recommendation', palette.gold],
+          ['EAA', 'market access pressure in Europe', palette.teal],
+          ['ADA', 'public-sector web/mobile rule pressure', palette.lavender]
+        ],
+        bars: [
+          ['Contrast and readability', 83, palette.gold, 'stripes'],
+          ['Alt text and media labels', 55, palette.coral, 'dots'],
+          ['Form labels', 48, palette.teal, 'crosshatch'],
+          ['Keyboard and focus flow', 68, palette.lavender, 'vertical']
+        ],
+        decisions: [
+          ['Create compliance gates', 'Turn WCAG checks into release criteria instead of audit memos.', palette.gold],
+          ['Prioritize fundamentals', 'Fix contrast, labels, alt text, empty controls and language declarations first.', palette.coral],
+          ['Document ownership', 'Make legal, product and design sign-offs explicit before launch.', palette.teal]
+        ],
+        meta: ['Legal + Product + Accessibility', 'Pre-release and procurement review', 'WCAG evidence mapped to accountable sign-off'],
+        human: ['Priya', 'The European Accessibility Act changed the temperature.'],
+        moves: [
+          ['Now', 'Separate must-fix fundamentals from advisory improvements.', palette.gold],
+          ['Next', 'Add accessibility evidence to launch and procurement gates.', palette.teal],
+          ['Watch', 'Track whether compliance work is arriving early enough to change design decisions.', palette.coral]
+        ],
+        evidence: 'The compliance story is useful because it turns a values conversation into a delivery system.',
+        note: 'Key signal: teams still fail on the basics, so infrastructure beats inspiration.'
+      },
+      ai: {
+        kpis: [
+          ['74', 'AI accessibility signal score', palette.coral],
+          ['6', 'front-end risk zones', palette.gold],
+          ['3', 'critical recovery paths', palette.teal],
+          ['1', 'new assurance layer needed', palette.lavender]
+        ],
+        bars: [
+          ['Conversational recovery', 78, palette.coral, 'stripes'],
+          ['Speech and input variance', 66, palette.gold, 'dots'],
+          ['Generated error states', 72, palette.teal, 'crosshatch'],
+          ['Explainability and trust', 81, palette.lavender, 'horizontal']
+        ],
+        decisions: [
+          ['Audit AI flows', 'Test accessibility across prompts, ambiguity, escalation and fallback states.', palette.coral],
+          ['Design for recovery', 'Assume the system will misunderstand users and make the exit path humane.', palette.teal],
+          ['Measure cognitive load', 'Treat complexity, motion and unclear generated copy as access risks.', palette.gold]
+        ],
+        meta: ['AI Product + UX + Accessibility', 'Prototype through post-launch monitoring', 'Recovery paths tested with assistive and neurodivergent users'],
+        human: ['Jon', 'I know AI accessibility matters, but I do not know what good looks like yet.'],
+        moves: [
+          ['Now', 'Map the highest-risk generated states and failure loops.', palette.coral],
+          ['Next', 'Define accessible AI interaction patterns for ambiguity, correction and escalation.', palette.teal],
+          ['Watch', 'Monitor where users abandon because the system cannot explain or repair itself.', palette.gold]
+        ],
+        evidence: 'AI changes the question from whether a screen passes to whether a user can recover when the system behaves unexpectedly.',
+        note: 'Key signal: model governance is not enough if the interface still excludes.'
+      },
+      systems: {
+        kpis: [
+          ['82', 'design-system governance score', palette.lavender],
+          ['5', 'infrastructure layers', palette.gold],
+          ['1', 'default-first operating model', palette.teal],
+          ['0', 'heroics required when defaults work', palette.coral]
+        ],
+        bars: [
+          ['Accessible components', 86, palette.gold, 'stripes'],
+          ['Tokens and states', 79, palette.teal, 'horizontal'],
+          ['Content rules', 64, palette.coral, 'dots'],
+          ['Release criteria', 84, palette.lavender, 'vertical']
+        ],
+        decisions: [
+          ['Make defaults inclusive', 'Contrast, focus, labels and motion controls should live in components.', palette.gold],
+          ['Turn patterns into policy', 'Document which teams can ship what, and what evidence is required.', palette.lavender],
+          ['Use system-level telemetry', 'Track recurring failures and feed them back into components.', palette.teal]
+        ],
+        meta: ['Design Systems + Engineering', 'Component design through adoption', 'Accessible defaults documented, tested and versioned'],
+        human: ['Sam', 'The only way this scales is components.'],
+        moves: [
+          ['Now', 'Identify the top five recurring accessibility fixes that should become defaults.', palette.gold],
+          ['Next', 'Bind accessibility rules to component documentation and acceptance criteria.', palette.lavender],
+          ['Watch', 'Review whether teams override accessible defaults under delivery pressure.', palette.teal]
+        ],
+        evidence: 'If every team has to remember accessibility from scratch, the organization has already lost.',
+        note: 'Key signal: the design system is the most scalable place to hold inclusion.'
+      },
+      neuro: {
+        kpis: [
+          ['61', 'neuroinclusive UX signal score', palette.teal],
+          ['4', 'recurring access needs', palette.gold],
+          ['2', 'highest-friction patterns', palette.coral],
+          ['1', 'core ask: reduce overload', palette.lavender]
+        ],
+        bars: [
+          ['Reduced motion', 58, palette.teal, 'horizontal'],
+          ['Predictable navigation', 72, palette.gold, 'stripes'],
+          ['Plain language', 69, palette.coral, 'dots'],
+          ['Error recovery', 76, palette.lavender, 'crosshatch']
+        ],
+        decisions: [
+          ['Design for bad-brain days', 'Support users when tired, overloaded, distracted or anxious.', palette.teal],
+          ['Reduce sensory demand', 'Give users control over motion, density and pace.', palette.gold],
+          ['Make recovery obvious', 'Use clear labels, stable navigation and non-punitive errors.', palette.coral]
+        ],
+        meta: ['UX + Content + Research', 'Discovery, content design and interaction QA', 'Cognitive load, recovery and control tested before release'],
+        human: ['Alex', 'Can I understand the page? Can I slow it down? Can I recover when I get lost?'],
+        moves: [
+          ['Now', 'Review the most dense, fast-moving or error-prone flows for overload.', palette.teal],
+          ['Next', 'Add control over motion, pace, density and recovery to interaction standards.', palette.gold],
+          ['Watch', 'Listen for users blaming themselves when the interface is the mismatch.', palette.coral]
+        ],
+        evidence: 'Neuroinclusion reframes accessibility as designing for variable human capacity, not an edge case.',
+        note: 'Key signal: users ask whether the product works when their capacity is low.'
+      }
+    };
+
+    const kpis = document.querySelector('#kpis');
+    const bars = document.querySelector('#bars');
+    const decisions = document.querySelector('#decisions');
+    const evidence = document.querySelector('#evidence');
+    const note = document.querySelector('#source-note');
+    const meta = document.querySelector('#meta');
+    const humanSignal = document.querySelector('#human-signal');
+    const moves = document.querySelector('#moves');
+    const buttons = Array.from(document.querySelectorAll('[data-filter]'));
+
+    function render(filter) {
+      const entry = data[filter];
+      kpis.innerHTML = entry.kpis.map(([value, label, color]) => `
+        <article class="kpi" style="--accent:${color}">
+          <span class="value">${value}</span>
+          <span class="label">${label}</span>
+        </article>
+      `).join('');
+
+      bars.innerHTML = entry.bars.map(([label, score, color, pattern]) => `
+        <div class="bar-row">
+          <span class="bar-label">${label}</span>
+          <span class="track" aria-label="${label}: ${score} out of 100">
+            <span class="bar pattern-${pattern}" style="--score:${score}; --accent:${color}"></span>
+          </span>
+          <span class="score">${score}</span>
+        </div>
+      `).join('');
+
+      decisions.innerHTML = entry.decisions.map(([title, copy, color]) => `
+        <li class="decision">
+          <span class="dot" style="--accent:${color}" aria-hidden="true"></span>
+          <span><strong>${title}</strong><span>${copy}</span></span>
+        </li>
+      `).join('');
+
+      meta.innerHTML = [
+        ['Primary owner', entry.meta[0]],
+        ['Lifecycle stage', entry.meta[1]],
+        ['Release gate', entry.meta[2]]
+      ].map(([title, copy]) => `
+        <div class="meta-item">
+          <strong>${title}</strong>
+          <span>${copy}</span>
+        </div>
+      `).join('');
+
+      humanSignal.innerHTML = `<strong>${entry.human[0]}:</strong> "${entry.human[1]}"`;
+
+      moves.innerHTML = entry.moves.map(([label, copy, color]) => `
+        <div class="move">
+          <span class="move-label" style="--accent:${color}">${label}</span>
+          <span class="move-copy">${copy}</span>
+        </div>
+      `).join('');
+
+      evidence.textContent = entry.evidence;
+      note.textContent = entry.note;
+    }
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        buttons.forEach((b) => b.setAttribute('aria-pressed', 'false'));
+        button.setAttribute('aria-pressed', 'true');
+        render(button.dataset.filter);
+      });
+    });
+
+    render('all');
+  </script>
+</body>
 </html>
