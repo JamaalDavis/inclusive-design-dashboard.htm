@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Inclusive Design Intelligence Dashboard</title>
+    <style>
+      :root {
+        --navy: #1b2a4a;
+        --gold: #d4a843;
+        --coral: #c75b3f;
+        --teal: #2a7b6f;
+        --bg: #faf7f2;
+        --ink-soft: rgba(27, 42, 74, 0.72);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--navy);
+        background: var(--bg);
+      }
+
+      main {
+        width: min(1080px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 72px 0;
+      }
+
+      .rule {
+        width: 96px;
+        height: 6px;
+        margin-bottom: 28px;
+        border-radius: 999px;
+        background: var(--gold);
+      }
+
+      h1 {
+        max-width: 860px;
+        margin: 0;
+        font-size: clamp(2.4rem, 8vw, 5.25rem);
+        line-height: 0.98;
+        letter-spacing: 0;
+      }
+
+      .lede {
+        max-width: 760px;
+        margin: 28px 0 0;
+        color: var(--ink-soft);
+        font-size: 1.25rem;
+        line-height: 1.55;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin: 34px 0 52px;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        min-height: 46px;
+        padding: 0 20px;
+        border: 1px solid rgba(27, 42, 74, 0.16);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--navy);
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .button.primary {
+        border-color: var(--navy);
+        background: var(--navy);
+        color: #fff;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .panel {
+        min-height: 180px;
+        padding: 24px;
+        border: 1px solid rgba(27, 42, 74, 0.1);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.76);
+      }
+
+      .panel h2 {
+        margin: 0 0 12px;
+        font-size: 1.05rem;
+      }
+
+      .panel p,
+      .panel li {
+        color: var(--ink-soft);
+        line-height: 1.55;
+      }
+
+      .panel p {
+        margin: 0;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 20px;
+      }
+
+      @media (max-width: 780px) {
+        main {
+          padding: 48px 0;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="rule"></div>
+      <h1>Inclusive Design Intelligence Dashboard</h1>
+      <p class="lede">
+        A story-led dashboard and Figma artifact set for showing how inclusive design is becoming product infrastructure across compliance, AI recovery, design systems, and neuroinclusive UX.
+      </p>
+
+      <nav class="actions" aria-label="Project links">
+        <a class="button primary" href="./inclusive-design-dashboard.html">Open Dashboard</a>
+        <a class="button" href="https://www.figma.com/design/fnpLqIBU7ML4ISFgQg13Td/ITC-Design-System-v1.0?node-id=12-2">Story Deck</a>
+        <a class="button" href="https://www.figma.com/design/fnpLqIBU7ML4ISFgQg13Td/ITC-Design-System-v1.0?node-id=12-144">Dashboard Frame</a>
+        <a class="button" href="https://www.figma.com/design/fnpLqIBU7ML4ISFgQg13Td/ITC-Design-System-v1.0?node-id=18-55">Accessibility Patterns</a>
+      </nav>
+
+      <section class="grid" aria-label="Project overview">
+        <article class="panel">
+          <h2>What This Is</h2>
+          <p>An interactive static dashboard that turns inclusive design research signals into product and operating decisions.</p>
+        </article>
+        <article class="panel">
+          <h2>Core Throughline</h2>
+          <p>Inclusive design has outgrown inspiration. It now needs infrastructure.</p>
+        </article>
+        <article class="panel">
+          <h2>Design System</h2>
+          <p>Built around the ITC Design System palette and accessibility pattern guidance for non-color-only data encoding.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
