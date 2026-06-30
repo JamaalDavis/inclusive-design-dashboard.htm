@@ -1,0 +1,7 @@
+# Keep this Pages repo focused on the dashboard prototype.
+*
+!.gitignore
+!.nojekyll
+!README.md
+!index.html
+!inclusive-design-dashboard.html
